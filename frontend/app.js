@@ -88,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const note = await res.json();
       addNoteToDOM(note);
-      noteForm.reset(); // Clear the form fields after submitting
     } catch (error) {
       console.error('Error adding note:', error);
     }
@@ -242,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const title = note.getAttribute('data-title').toLowerCase();
       const content = note.getAttribute('data-content').toLowerCase();
       const tags = note.getAttribute('data-tags').toLowerCase();
-      if (title.includes(searchInput) || content includes(searchInput) || tags.includes(searchInput)) {
+      if (title.includes(searchInput) || content.includes(searchInput) || tags.includes(searchInput)) {
         note.style.display = '';
       } else {
         note.style.display = 'none';
@@ -264,14 +263,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Make fetchNotes globally accessible
-  window.fetchNotes = fetchNotes;
-
-  // Logout function
   window.logout = () => {
     localStorage.removeItem('token');
-    token = null;
-    notesApp.style.display = 'none';
     authDiv.style.display = 'block';
+    notesApp.style.display = 'none';
+    notesDiv.innerHTML = '';
   };
+
+  // Make fetchNotes globally accessible
+  window.fetchNotes = fetchNotes;
 });
