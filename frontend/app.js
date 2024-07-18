@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = document.getElementById('loginPassword').value;
 
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/auth/login', {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = document.getElementById('registerPassword').value;
 
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/auth/register', {
+      const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, email, password }),
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const backgroundColor = document.getElementById('noteColor').value;
 
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/notes/add', {
+      const res = await fetch('/api/notes/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const note = await res.json();
       addNoteToDOM(note);
-      noteForm.reset(); 
+      noteForm.reset(); // Clear the form fields after submitting
     } catch (error) {
       console.error('Error adding note:', error);
     }
@@ -96,12 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function fetchNotes() {
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/notes', {
+      const res = await fetch('/api/notes', {
         headers: { 'x-auth-token': token },
       });
 
       const notes = await res.json();
-      notesDiv.innerHTML = ''; 
+      notesDiv.innerHTML = ''; // Clear existing notes
       notes.forEach(addNoteToDOM);
     } catch (error) {
       console.error('Error fetching notes:', error);
@@ -116,11 +116,10 @@ document.addEventListener('DOMContentLoaded', () => {
       <h3>${note.title}</h3>
       <p>${note.content}</p>
       <p><strong>Tags:</strong> ${note.tags.join(', ')}</p>
-      ${note.deletedAt ? `
-        <button class="button btn-restore" onclick="restoreNote('${note._id}')">Restore</button>
-        <button class="button btn-delete-per" onclick="permanentlyDeleteNote('${note._id}')">Permanently Delete</button>` : `
-        <button class="button btn-archive" onclick="archiveNote('${note._id}', ${note.isArchived})">${note.isArchived ? 'Unarchive' : 'Archive'}</button>
-        <button class="button btn-delete" onclick="deleteNote('${note._id}')">Delete</button>`}
+      ${note.deletedAt ? `<button onclick="restoreNote('${note._id}')">Restore</button>
+      <button onclick="permanentlyDeleteNote('${note._id}')">Permanently Delete</button>` : `
+      <button onclick="archiveNote('${note._id}', ${note.isArchived})">${note.isArchived ? 'Unarchive' : 'Archive'}</button>
+      <button onclick="deleteNote('${note._id}')">Delete</button>`}
     `;
     div.setAttribute('data-tags', note.tags.join(', '));
     div.setAttribute('data-title', note.title);
@@ -130,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.archiveNote = async (noteId, isArchived) => {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/api/notes/update/${noteId}`, {
+      const res = await fetch(`/api/notes/update/${noteId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -151,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.deleteNote = async (noteId) => {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/api/notes/delete/${noteId}`, {
+      const res = await fetch(`/api/notes/delete/${noteId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -171,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.restoreNote = async (noteId) => {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/api/notes/restore/${noteId}`, {
+      const res = await fetch(`/api/notes/restore/${noteId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -191,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.permanentlyDeleteNote = async (noteId) => {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/api/notes/permanent-delete/${noteId}`, {
+      const res = await fetch(`/api/notes/permanent-delete/${noteId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -211,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.viewTrash = async () => {
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/notes/trash', {
+      const res = await fetch('/api/notes/trash', {
         headers: { 'x-auth-token': token },
       });
 
@@ -243,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const title = note.getAttribute('data-title').toLowerCase();
       const content = note.getAttribute('data-content').toLowerCase();
       const tags = note.getAttribute('data-tags').toLowerCase();
-      if (title.includes(searchInput) || content.includes(searchInput) || tags.includes(searchInput)) {
+      if (title.includes(searchInput) || content includes(searchInput) || tags.includes(searchInput)) {
         note.style.display = '';
       } else {
         note.style.display = 'none';
@@ -253,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.viewArchivedNotes = async () => {
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/notes/archived', {
+      const res = await fetch('/api/notes/archived', {
         headers: { 'x-auth-token': token },
       });
 
@@ -265,14 +264,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-
+  // Make fetchNotes globally accessible
   window.fetchNotes = fetchNotes;
 
+  // Logout function
   window.logout = () => {
     localStorage.removeItem('token');
     token = null;
-    authDiv.style.display = 'block';
     notesApp.style.display = 'none';
-    notesDiv.innerHTML = '';
+    authDiv.style.display = 'block';
   };
 });
