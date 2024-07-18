@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <div id="auth">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+      <h2>Register</h2>
+      <form id="registerForm">
+        <input type="text" id="registerUsername" placeholder="Username" required>
+        <input type="email" id="registerEmail" placeholder="Email" required>
+        <input type="password" id="registerPassword" placeholder="Password" required>
+        <button type="submit">Register</button>
+      </form>
+    </div>
+    <div id="notesApp" style="display: none;">
+      <h1>Notes</h1>
+      <input type="text" id="searchInput" placeholder="Search notes..." oninput="searchNotes()">
+      <input type="text" id="labelInput" placeholder="Enter label to filter">
+      <button onclick="filterByLabel()">Filter by Label</button>
+      <button onclick="viewArchivedNotes()">View Archived Notes</button>
+      <button onclick="viewTrash()">View Trash</button>
+      <button onclick="fetchNotes()">Show All Notes</button>
+      <form id="noteForm">
+        <input type="text" id="noteTitle" placeholder="Title" required>
+        <textarea id="noteContent" placeholder="Content"></textarea>
+        <input type="text" id="noteTags" placeholder="Tags (comma separated)">
+        <input type="color" id="noteColor">
+        <button type="submit">Add Note</button>
+      </form>
+      <div id="notes"></div>
+    </div>
+    
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
