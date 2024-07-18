@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Notes App</title><link rel="stylesheet" href="styles.css"><script defer="defer" src="bundle.js"></script></head><body><div id="app" class="notes-container"><div id="auth" class="pre-sub-container"><div class="credentials-container"><div class="login-container"><h2>Login</h2><form id="loginForm"><input type="email" id="loginEmail" placeholder="Email" required autocomplete="off"> <input type="password" id="loginPassword" placeholder="Password" required autocomplete="off"> <button type="submit" class="login-btn button">Login</button></form></div><div><h2>Register</h2><form id="registerForm"><input id="registerUsername" placeholder="Username" required autocomplete="off"> <input type="email" id="registerEmail" placeholder="Email" required autocomplete="off"> <input type="password" id="registerPassword" placeholder="Password" required autocomplete="off"> <button type="submit" class="register-btn button">Register</button></form></div></div></div><div><div id="notesApp" style="display: none;"><h1>Notes</h1><div class="menu-container"><div class="menu"><button class="button menu-btn">Menu</button><div class="menu-content"><button onclick="fetchNotes()" class="button show-notes-btn menu-option-btn">All</button> <button onclick="viewArchivedNotes()" class="button view-archived-btn menu-option-btn">Archived</button> <button onclick="viewTrash()" class="button view-trash-btn menu-option-btn">Trash</button> <button onclick="logout()" class="button logout-btn menu-option-btn">Logout</button></div></div></div><div class="sub-container"><div class="search-container"><input id="searchInput" placeholder="Search notes..." oninput="searchNotes()" autocomplete="off"><div class="label-search"><input id="labelInput" placeholder="Enter label to filter"> <button onclick="filterByLabel()" class="button filter-btn">Filter by Label</button></div></div><form id="noteForm"><input id="noteTitle" placeholder="Title" required autocomplete="off"> <textarea id="noteContent" placeholder="Content"></textarea> <input id="noteTags" placeholder="Tags (comma separated)" autocomplete="off"> <input type="color" id="noteColor" value="#ffeb3b"> <button type="submit" class="button add-note-btn">Add Note</button></form></div></div></div><div id="notes"></div></div><script src="app.js"></script><script type="module">// Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyB1tDRSDuJK0Sw7lu4KNTdFpC77KFSfniA",
+      authDomain: "notes-app-91da1.firebaseapp.com",
+      projectId: "notes-app-91da1",
+      storageBucket: "notes-app-91da1.appspot.com",
+      messagingSenderId: "943494640423",
+      appId: "1:943494640423:web:62fb6c5cb28bb386ebaf02",
+      measurementId: "G-FP5G6M5WKB"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);</script></body></html>
