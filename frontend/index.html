@@ -7,40 +7,61 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="app">
-    <div id="auth">
-      <h2>Login</h2>
-      <form id="loginForm">
-        <input type="email" id="loginEmail" placeholder="Email" required>
-        <input type="password" id="loginPassword" placeholder="Password" required>
-        <button type="submit">Login</button>
-      </form>
-      <h2>Register</h2>
-      <form id="registerForm">
-        <input type="text" id="registerUsername" placeholder="Username" required>
-        <input type="email" id="registerEmail" placeholder="Email" required>
-        <input type="password" id="registerPassword" placeholder="Password" required>
-        <button type="submit">Register</button>
-      </form>
+  <div id="app" class="notes-container">
+    <div id="auth" class="pre-sub-container">
+      <div class="credentials-container">
+        <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+          <input type="email" id="loginEmail" placeholder="Email" required autocomplete="off">
+          <input type="password" id="loginPassword" placeholder="Password" required autocomplete="off">
+          <button type="submit" class="login-btn button">Login</button>
+        </form>
+        </div>
+        <div>
+        <h2>Register</h2>
+        <form id="registerForm">
+          <input type="text" id="registerUsername" placeholder="Username" required autocomplete="off">
+          <input type="email" id="registerEmail" placeholder="Email" required autocomplete="off">
+          <input type="password" id="registerPassword" placeholder="Password" required autocomplete="off">
+          <button type="submit" class="register-btn button">Register</button>
+        </form>
+        </div>
+      </div>
     </div>
-    <div id="notesApp" style="display: none;">
-      <h1>Notes</h1>
-      <input type="text" id="searchInput" placeholder="Search notes..." oninput="searchNotes()">
-      <input type="text" id="labelInput" placeholder="Enter label to filter">
-      <button onclick="filterByLabel()">Filter by Label</button>
-      <button onclick="viewArchivedNotes()">View Archived Notes</button>
-      <button onclick="viewTrash()">View Trash</button>
-      <button onclick="fetchNotes()">Show All Notes</button>
-      <form id="noteForm">
-        <input type="text" id="noteTitle" placeholder="Title" required>
-        <textarea id="noteContent" placeholder="Content"></textarea>
-        <input type="text" id="noteTags" placeholder="Tags (comma separated)">
-        <input type="color" id="noteColor">
-        <button type="submit">Add Note</button>
-      </form>
-      <div id="notes"></div>
+    <div>
+      <div id="notesApp" style="display: none;" >
+        <h1>Notes</h1>
+        <div class="menu-container">
+          <div class="menu">
+            <button class="button menu-btn">Menu</button>
+            <div class="menu-content"> 
+              <button onclick="fetchNotes()" class="button show-notes-btn menu-option-btn">All</button>
+              <button onclick="viewArchivedNotes()" class="button view-archived-btn menu-option-btn">Archived</button>
+              <button onclick="viewTrash()" class="button view-trash-btn menu-option-btn">Trash</button>
+              <button onclick="logout()" class="button logout-btn menu-option-btn">Logout</button>
+            </div>
+          </div>
+        </div>
+        <div class="sub-container">
+          <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search notes..." oninput="searchNotes()" autocomplete="off">
+            <div class="label-search">
+              <input type="text" id="labelInput" placeholder="Enter label to filter">
+              <button onclick="filterByLabel()" class="button filter-btn">Filter by Label</button>
+            </div>
+          </div>
+          <form id="noteForm">
+            <input type="text" id="noteTitle" placeholder="Title" required autocomplete="off">
+            <textarea id="noteContent" placeholder="Content"></textarea>
+            <input type="text" id="noteTags" placeholder="Tags (comma separated)" autocomplete="off">
+            <input type="color" id="noteColor" value="#ffeb3b">
+            <button type="submit" class="button add-note-btn">Add Note</button>
+          </form>
+        </div>
+      </div>
     </div>
-    
+    <div id="notes"></div>
   </div>
   <script src="app.js"></script>
 </body>

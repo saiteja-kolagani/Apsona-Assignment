@@ -88,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const note = await res.json();
       addNoteToDOM(note);
+      noteForm.reset(); 
     } catch (error) {
       console.error('Error adding note:', error);
     }
@@ -100,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const notes = await res.json();
-      notesDiv.innerHTML = ''; // Clear existing notes
+      notesDiv.innerHTML = ''; 
       notes.forEach(addNoteToDOM);
     } catch (error) {
       console.error('Error fetching notes:', error);
@@ -115,10 +116,11 @@ document.addEventListener('DOMContentLoaded', () => {
       <h3>${note.title}</h3>
       <p>${note.content}</p>
       <p><strong>Tags:</strong> ${note.tags.join(', ')}</p>
-      ${note.deletedAt ? `<button onclick="restoreNote('${note._id}')">Restore</button>
-      <button onclick="permanentlyDeleteNote('${note._id}')">Permanently Delete</button>` : `
-      <button onclick="archiveNote('${note._id}', ${note.isArchived})">${note.isArchived ? 'Unarchive' : 'Archive'}</button>
-      <button onclick="deleteNote('${note._id}')">Delete</button>`}
+      ${note.deletedAt ? `
+        <button class="button btn-restore" onclick="restoreNote('${note._id}')">Restore</button>
+        <button class="button btn-delete-per" onclick="permanentlyDeleteNote('${note._id}')">Permanently Delete</button>` : `
+        <button class="button btn-archive" onclick="archiveNote('${note._id}', ${note.isArchived})">${note.isArchived ? 'Unarchive' : 'Archive'}</button>
+        <button class="button btn-delete" onclick="deleteNote('${note._id}')">Delete</button>`}
     `;
     div.setAttribute('data-tags', note.tags.join(', '));
     div.setAttribute('data-title', note.title);
@@ -263,6 +265,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Make fetchNotes globally accessible
+
   window.fetchNotes = fetchNotes;
+
+  window.logout = () => {
+    localStorage.removeItem('token');
+    token = null;
+    authDiv.style.display = 'block';
+    notesApp.style.display = 'none';
+    notesDiv.innerHTML = '';
+  };
 });
